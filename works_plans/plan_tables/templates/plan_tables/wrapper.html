@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Индивидульный план работы</title>
+  <link rel="stylesheet" href="{% static 'plan_tables/styles/style.css' %}">
+  <meta charset="UTF-8">
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script src="{% static 'plan_tables/js/nav_functions.js' %}"></script>
+</head>
+
+<body>
+
+  <div class='text_font divLogin'>
+    {% if username %}
+      <a href="/auth/logout">Выйти ({{ username }})</a>
+    {% else %}
+      <a href="/auth/login/">Войти</a>
+    {% endif %}
+  </div>
+
+  {% block content %}{% endblock %}
+  {% block login %}{% endblock %}
+
+  <script src="{% static 'plan_tables/js/add_row_fall.js' %}"></script>
+  <script src="{% static 'plan_tables/js/add_row_fallHourly.js' %}"></script>
+  <script src="{% static 'plan_tables/js/add_row_spring.js' %}"></script>
+  <script src="{% static 'plan_tables/js/add_row_springHourly.js' %}"></script>
+  <script src="{% static 'plan_tables/js/add_row_educMethodWork.js' %}"></script>
+  <script src="{% static 'plan_tables/js/add_row_sciWork.js' %}"></script>
+  <script src="{% static 'plan_tables/js/add_row_literature.js' %}"></script>
+  <script src="{% static 'plan_tables/js/add_row_otherWork.js' %}"></script>
+  <script src="{% static 'plan_tables/js/add_row_training.js' %}"></script>
+
+  <script src="{% static 'plan_tables/js/calc_functions.js' %}"></script>
+  <script src="{% static 'plan_tables/js/calc_sumWorks.js' %}"></script>
+
+  <script src="{% static 'plan_tables/js/del_rows.js' %}"></script>
+  <script src="{% static 'plan_tables/js/checkTables.js' %}"></script>
+  <script src="{% static 'plan_tables/js/print_tables.js' %}"></script>
+
+</body>
+</html>

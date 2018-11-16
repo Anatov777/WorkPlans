@@ -1,0 +1,122 @@
+{% extends "plan_tables/wrapper.html" %}
+
+{% block content %}
+
+  {% for i in teacher %}
+
+    {% if i.post == 'администратор' %}
+
+      <div align='center'>
+        <p>
+          {% for i in teacher %}
+            {{ i.post }} {{ i.surname }} {{ i.name }}
+          {% endfor %}
+        </p>
+      </div>
+      <hr>
+
+      <form action="" method="post" id='teacherChooseForm'>{% csrf_token %}</form>
+
+      <div>
+        <p>
+          <input type='text' name='chooseTeacher' id='chooseTeacherId' form='teacherChooseForm' list='listTeacher' value='{{ choosedTeacher }}' class='inputSelTeach'>
+          <datalist id='listTeacher' form='teacherChooseForm'>
+            {% for i in allTeachers %}
+              <option>{{ i.surname }} {{ i.name }}, {{ i.post }}</option>
+            {% endfor %}
+          </datalist>
+        </p>
+        <p>
+          <input type="submit" value="Показать" form='teacherChooseForm'>
+        </p>
+      </div>
+      <hr>
+
+    {% endif %}
+    {% if selectTeacher or i.post != 'администратор' %}
+
+      {% if i.post != 'администратор' %}
+        <input type='text' id='chooseTeacherId' value='' hidden>
+      {% endif %}
+
+      <div class='text_font'>
+        <p>
+          Индивидуальный учебный план работы №
+
+          <select name="selectPlanId" id="idSelectPlanId" onChange="location.href=toPlanId(this.id);">
+
+            <option disabled selected>Выберите план</option>
+            {% for planid in argPlanId %}
+              <option value='{{ planid.planID }}' id='idOptionPlanId_{{ planid.planID }}'>{{ planid.planID }}</option>
+            {% endfor %}
+          </select>
+
+          {% if argSelectedPlanId %}
+            <script>
+              setSelected('idOptionPlanId_{{ argSelectedPlanId }}');
+            </script>
+          {% endif %}
+
+          на
+
+            <select name="selectPlanYear" id="idSelectPlanYear" onChange="location.href=toYear(this.id);">
+              <option disabled selected>Выберите год</option>
+              {% for year in planYear %}
+                {% if year.planID == argSelectedPlanId %}
+                  <option value='{{ year.year }}' id='idOptionYear_{{ year.year }}'>{{ year.year }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+
+            {% if argSelectedYear %}
+              <script>
+                setSelected('idOptionYear_{{ argSelectedYear }}');
+              </script>
+            {% endif %}
+
+           год
+        </p>
+        <p>
+          {% if i.post != 'администратор' %}
+            {% for i in teacher %}
+              {{ i.post }} {{ i.surname }} {{ i.name }}
+            {% endfor %}
+          {% endif %}
+
+          {% for i in selectTeacher %}
+            {{ i.post }} {{ i.surname }} {{ i.name }}
+          {% endfor %}
+        </p>
+      </div>
+
+      <div class='text_font divCreateBtn'>
+        <form>{% csrf_token %}
+          <input type='button' value='Создать план' onClick='location.href="/plan_tables/create_plan/"'>
+        </form>
+      </div>
+      <hr>
+
+      <p>
+        <a href="" onClick="event.preventDefault();location.href=toPrint();">Печать</a>
+        <a href="/plan_tables/" class='fillLink'>Заполнение</a>
+      </p>
+
+      {% block print_tables %}{% endblock %}
+
+      {% if argSelectedYear %}
+        {% block tables_input %}{% endblock %}
+      {% endif %}
+
+      {% block create_plan %}{% endblock %}
+
+      <form action='' method='post' id='formSendApproval'>
+        {% csrf_token %}
+      </form>
+
+      <!-- <p align='center'><input type="submit" form='formSendApproval' value="Отправить на утверждение" id='approvalSendButton' onclick="$('.approvalSendValue').val(1)"><input type="number" form='formSendApproval' value="0" class='approvalSendValue' name='approvalSendValue' hidden></p> -->
+
+    {% endif %}
+
+  {% endfor %}
+
+{% endblock %}

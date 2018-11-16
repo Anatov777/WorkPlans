@@ -1,0 +1,204 @@
+{% block content %}
+
+{% if fallHourlyWorkQuerySet %}
+
+<strong><div class='parHead'>Работа по совместительству или с почасовой оплатой (осень)</div></strong>
+
+<form action='' method='post' id='form_fallHourly'>
+  {% csrf_token %}
+</form>
+<div><table border='1' id='table_fallHourly'>
+  <tr>
+    <th rowspan='2' width='30px'>
+      № п/п
+    </th>
+    <th rowspan='2' width='250px'>
+      Поток, группа
+    </th>
+    <th rowspan='2' width='150px'>
+      Дисциплина
+    </th>
+    <th rowspan='2'>
+      Вид работ*
+    </th>
+    <th colspan='5'>
+      Кол-во часов по видам уч. работы (плановое)
+    </th>
+    <th colspan='2' rowspan='2'>
+      Всего
+    </th>
+  </tr>
+  <tr>
+    <th>сентябрь</th>
+    <th>октябрь</th>
+    <th>ноябрь</th>
+    <th>декабрь</th>
+    <th>январь</th>
+  </tr>
+{% for i in fallHourlyWorkQuerySet %}
+  <tr>
+    <td>
+      <input type='text' name="num_p_fallHourly_{{ i.num_p }}" class='academNumP' form='form_fallHourly' value='{{ i.num_p }}' readonly>
+    </td>
+    <td>
+      <textarea  name='flow_fallHourly_{{ i.num_p }}' class='academTextarea' form='form_fallHourly' value='{{ i.group }}' cols='40' rows='1'>{{ i.group }}</textarea>
+    </td>
+    <td>
+      <input type='text' name='disc_fallHourly_{{ i.num_p }}' class='academTextarea' form='form_fallHourly' value='{{ i.discipline }}'>
+    </td>
+    <td>
+      <input type='text' name='worktype_fallHourly_{{ i.num_p }}' class='academTextarea' form='form_fallHourly' value='{{ i.workType }}'>
+    </td>
+    <td>
+      <input type='number' name='sep_fallHourly_{{ i.num_p }}' id='sep_fallHourly_{{ i.num_p }}' class='sep_fallHourly academNumInput' form='form_fallHourly' value='{{ i.september }}'>
+    </td>
+    <td>
+      <input type='number' name='oct_fallHourly_{{ i.num_p }}' id='oct_fallHourly_{{ i.num_p }}' class='oct_fallHourly academNumInput' form='form_fallHourly' value='{{ i.october }}'>
+    </td>
+    <td>
+      <input type='number' name='nov_fallHourly_{{ i.num_p }}' id='nov_fallHourly_{{ i.num_p }}' class='nov_fallHourly academNumInput' form='form_fallHourly' value='{{ i.november }}'>
+    </td>
+    <td>
+      <input type='number' name='dec_fallHourly_{{ i.num_p }}' id='dec_fallHourly_{{ i.num_p }}' class='dec_fallHourly academNumInput' form='form_fallHourly' value='{{ i.december }}'>
+    </td>
+    <td>
+      <input type='number' name='jan_fallHourly_{{ i.num_p }}' id='jan_fallHourly_{{ i.num_p }}' class='jan_fallHourly academNumInput' form='form_fallHourly' value='{{ i.januar }}'>
+    </td>
+    <td>
+      <input type='number' id='count_fallHourly_{{ i.num_p }}' name="sumfact_fallHourly_{{ i.num_p }}" class='sum_fact_fallHourly academNumInput' form='form_fallHourly' value='{{ i.fact }}'>
+    </td>
+  </tr>
+
+{% endfor %}
+  <tr>
+    <td colspan='4' align='right'>
+      Всего отработано за месяц:
+    </td>
+    <td>
+      <input type='number' name='sep_all_fallHourly' class='sep_all_fallHourly academNumInput' form='form_fallHourly' readonly>
+    </td>
+    <td>
+      <input type='number' name='oct_all_fallHourly' class='oct_all_fallHourly academNumInput' form='form_fallHourly' readonly>
+    </td>
+    <td>
+      <input type='number' name='nov_all_fallHourly' class='nov_all_fallHourly academNumInput' form='form_fallHourly' readonly>
+    </td>
+    <td>
+      <input type='number' name='dec_all_fallHourly' class='dec_all_fallHourly academNumInput' form='form_fallHourly' readonly>
+    </td>
+    <td>
+      <input type='number' name='jan_all_fallHourly' class='jan_all_fallHourly academNumInput' form='form_fallHourly' readonly>
+    </td>
+    <td colspan='2'>
+      <input type='number' name='sumfact_all_fallHourly' class='sumfact_all_fallHourly academNumInput' form='form_fallHourly' readonly>
+    </td>
+  </tr>
+</table></div>
+
+{% else %}
+
+<strong><div class='parHead'>Работа по совместительству или с почасовой оплатой (осень)</div></strong>
+
+<form action='' method='post' id='form_fallHourly'>
+  {% csrf_token %}
+</form>
+<div><table border='1' id='table_fallHourly'>
+  <tr>
+    <th rowspan='2' width='30px'>
+      № п/п
+    </th>
+    <th rowspan='2' width='250px'>
+      Поток, группа
+    </th>
+    <th rowspan='2' width='150px'>
+      Дисциплина
+    </th>
+    <th rowspan='2'>
+      Вид работ*
+    </th>
+    <th colspan='5'>
+      Кол-во часов по видам уч. работы (плановое)
+    </th>
+    <th colspan='2' rowspan='2' align='center'>
+      Всего
+    </th>
+  </tr>
+  <tr>
+    <th>сентябрь</th>
+    <th>октябрь</th>
+    <th>ноябрь</th>
+    <th>декабрь</th>
+    <th>январь</th>
+  </tr>
+  <tr>
+    <td>
+      <input type='text' name="num_p_fallHourly_1" class='academNumP' form='form_fallHourly' value='1'class='academNumP'  readonly>
+    </td>
+    <td>
+      <input type='text' name='flow_fallHourly_1' class='academTextarea' form='form_fallHourly'>
+    </td>
+    <td>
+      <input type='text' name='disc_fallHourly_1' class='academTextarea' form='form_fallHourly'>
+    </td>
+    <td>
+      <input type='text' name='worktype_fallHourly_1' class='academTextarea' form='form_fallHourly'>
+    </td>
+    <td>
+      <input type='number' name='sep_fallHourly_1' id='sep_fallHourly_1' class='sep_fallHourly academNumInput' form='form_fallHourly'>
+    </td>
+    <td>
+      <input type='number' name='oct_fallHourly_1' id='oct_fallHourly_1' class='oct_fallHourly academNumInput' form='form_fallHourly'>
+    </td>
+    <td>
+      <input type='number' name='nov_fallHourly_1' id='nov_fallHourly_1' class='nov_fallHourly academNumInput' form='form_fallHourly'>
+    </td>
+    <td>
+      <input type='number' name='dec_fallHourly_1' id='dec_fallHourly_1' class='dec_fallHourly academNumInput' form='form_fallHourly'>
+    </td>
+    <td>
+      <input type='number' name='jan_fallHourly_1' id='jan_fallHourly_1' class='jan_fallHourly academNumInput' form='form_fallHourly'>
+    </td>
+    <td colspan='2'>
+      <input type='number' id='count_fallHourly_1' name='sumfact_fallHourly_1' class='sum_fact_fallHourly academNumInput' form='form_fallHourly' readonly>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='4' align='right'>
+      Всего отработано за месяц:
+    </td>
+    <td>
+      <input type='number' name='sep_all_fallHourly' class='sep_all_fallHourly academNumInput' form='form_fallHourly'  readonly>
+    </td>
+    <td>
+      <input type='number' name='oct_all_fallHourly' class='oct_all_fallHourly academNumInput' form='form_fallHourly'  readonly>
+    </td>
+    <td>
+      <input type='number' name='nov_all_fallHourly' class='nov_all_fallHourly academNumInput' form='form_fallHourly'  readonly>
+    </td>
+    <td>
+      <input type='number' name='dec_all_fallHourly' class='dec_all_fallHourly academNumInput' form='form_fallHourly'  readonly>
+    </td>
+    <td>
+      <input type='number' name='jan_all_fallHourly' class='jan_all_fallHourly academNumInput' form='form_fallHourly'  readonly>
+    </td>
+    <td colspan='2'>
+      <input type='number' name='sumfact_all_fallHourly' class='sumfact_all_fallHourly academNumInput' form='form_fallHourly' readonly>
+    </td>
+  </tr>
+</table></div>
+
+{% endif %}
+
+<div class='academBtn'>
+  <input type='button' value='Добавить строку' onClick='add_row_fallHourly()' form='form_fallHourly'>
+  <input type='button' value='Удалить строку' onClick="delRow('table_fallHourly', this.id, 2)" form='form_fallHourly' id='del_btn_fallHourly' disabled>
+  <input type='submit' value='Сохранить' form='form_fallHourly' id='btn_fallHourly' class='btnSave'>
+</div>
+
+<p class='notes'>*Вид работ:<br>
+Лекции (Л); лабораторные занятия (ЛЗ); практические занятия (ПЗ); курсовое проектирование (КП);<br>
+консультации (К); экзамены (Э); зачеты (З); практика (П); ВКР; руководство аспирантами (РА);<br>
+работа в составе ГЭК (ГЭК); рецензирование контрольных работ (РКР).
+<p>
+
+{% endblock %}

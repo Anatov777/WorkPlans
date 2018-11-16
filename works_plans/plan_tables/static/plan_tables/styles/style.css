@@ -1,0 +1,104 @@
+body {
+  background: silver
+}
+
+input[type="text"] {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+textarea {
+  font-family: Verdana, Geneva, sans-serif;
+  border: none;
+}
+
+td {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+th {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 11pt;
+}
+
+p {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 12pt;
+  margin-left: 5%;
+}
+
+table {
+  margin-left: 5%;
+  background-color: white;
+}
+
+.finalTable {
+  display: inline-block;
+}
+
+.text_font {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 12pt;
+}
+
+.inputSelTeach {
+  width: 35%;
+}
+
+.divCreateBtn {
+  margin-left: 5%;
+  margin-right:6.75%;
+  margin-bottom: 20px;
+}
+
+.fillLink {
+  margin-left: 2%;
+}
+
+.divLogin {
+  margin-right: 5%;
+  text-align: right;
+}
+
+.parHead {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14pt;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.academNumP {
+  width: 80%;
+  border: none;
+  text-align: center;
+}
+
+.academNumInput {
+  width: 70px;
+  text-align: center;
+}
+
+.academTextarea {
+  resize: none;
+  width: 97%;
+  font-size: 10pt;
+}
+
+.academBtn {
+  font-family: Verdana, Geneva, sans-serif;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.notes {
+  text-align: left;
+  margin-right: 5%;
+}
+
+.exampleBtn {
+  margin-left: 5%;
+}
+
+.editionLit {
+  width:110px;
+}

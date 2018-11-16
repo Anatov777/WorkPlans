@@ -1,0 +1,171 @@
+{% block content %}
+{% load static %}
+
+{% if educMethodWorkQuerySet %}
+
+<strong><p class='parHead'>Учебно-методическая работа</p></strong>
+
+<form action='' method='post' id='form_educMethodWork'>
+  {% csrf_token %}
+</form>
+
+<div><table border='1' id='tableId_educMethodWork'>
+  <tr>
+    <th width='30px'>
+      № <br> п/п
+    </th>
+    <th width='530px'>
+      Наименование мероприятия
+    </th>
+    <th width='170px'>
+      Срок исполнения
+    </th>
+    <th width='150px'>
+      Отметка о <br>выполнении
+    </th>
+    <th>
+      План
+    </th>
+    <th>
+      Факт.
+    </th>
+  </tr>
+
+{% for i in educMethodWorkQuerySet %}
+
+  <tr>
+    <td>
+      <input type='text' name="num_p_educMethodWork_{{ i.num_p }}" class='academNumP' form='form_educMethodWork' value='{{ i.num_p }}' readonly>
+    </td>
+    <td>
+      <textarea  name='eventName_educMethodWork_{{ i.num_p }}' class='academTextarea' form='form_educMethodWork' cols='40' rows='1'>{{ i.eventName }}</textarea>
+      <datalist id='list_name' form='form_educMethodWork'>
+        <option selected disabled>Наименование</option>
+        <option>конспектов лекций</option>
+        <option>сборников для практических и лабораторных занятий</option>
+        <option>раздаточного материала для лекционных и практических занятий</option>
+        <option>методических материалов по выполнению курсовых и дипломных проектов и работ</option>
+        <option>проведения промежуточной и итоговой аттестации</option>
+      </datalist>
+    </td>
+    <td>
+      <input type='text' name='time_educMethodWork_{{ i.num_p }}' class='academTextarea' value='{{ i.time }}' form='form_educMethodWork'>
+    </td>
+    <td>
+      <input type='text' name='mark_educMethodWork_{{ i.num_p }}' class='academTextarea' form='form_educMethodWork'>
+    </td>
+    <td>
+      <input type='number' id='count_educMethodWork_{{ i.num_p }}' value='{{ i.plan }}' name='plan_educMethodWork_{{ i.num_p }}' class='sum_plan_educMethodWork academNumInput' form='form_educMethodWork'>
+    </td>
+    <td>
+      <input type='number' id='fact_educMethodWork_{{ i.num_p }}' value='{{ i.fact }}' name='fact_educMethodWork_{{ i.num_p }}' class='fact_work_educMethodWork academNumInput' form='form_educMethodWork'>
+    </td>
+  </tr>
+
+{% endfor %}
+
+  <tr>
+    <td colspan='4' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_educMethodWork' class='sumPlan_educMethodWork academNumInput' form='form_educMethodWork'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_educMethodWork' class='sumFact_educMethodWork academNumInput' form='form_educMethodWork'><br>
+    </td>
+  </tr>
+</table></div>
+
+{% else %}
+
+<strong><p class='parHead'>Учебно-методическая работа</p></strong>
+
+<form action='' method='post' id='form_educMethodWork'>
+  {% csrf_token %}
+</form>
+
+<div><table border='1' id='tableId_educMethodWork'>
+  <tr>
+    <th style='width:30px'>
+      № п/п
+    </th>
+    <th style='width:576px'>
+      Наименование мероприятия
+    </th>
+    <th style='width:150px'>
+      Срок исполнения
+    </th>
+    <th>
+      Отметка о <br>выполнении
+    </th>
+    <th>
+      План
+    </th>
+    <th>
+      Факт.
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <input type='text' name="num_p_educMethodWork_1" class='academNumP' form='form_educMethodWork' value='1' readonly>
+    </td>
+    <td>
+      <textarea  name='eventName_educMethodWork_1' class='academTextarea' form='form_educMethodWork' cols='40' rows='1' style='resize:none;width:98%'>{{ i.group }}</textarea>
+      <datalist id='list_name' form='form_educMethodWork'>
+        <option selected disabled>Наименование</option>
+        <option>конспектов лекций</option>
+        <option>сборников для практических и лабораторных занятий</option>
+        <option>раздаточного материала для лекционных и практических занятий</option>
+        <option>методических материалов по выполнению курсовых и дипломных проектов и работ</option>
+        <option>проведения промежуточной и итоговой аттестации</option>
+      </datalist>
+    </td>
+    <td>
+      <input type='text' name='time_educMethodWork_1' class='academTextarea' form='form_educMethodWork'>
+    </td>
+    <td>
+      <input type='text' name='mark_educMethodWork_1' class='academTextarea' form='form_educMethodWork'>
+    </td>
+    <td>
+      <input type='number' id='count_educMethodWork_1' name='plan_educMethodWork_1' class='sum_plan_educMethodWork academNumInput' form='form_educMethodWork'>
+    </td>
+    <td>
+      <input type='number' id='fact_educMethodWork_1' name='fact_educMethodWork_1' class='fact_work_educMethodWork academNumInput' form='form_educMethodWork'>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='4' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_educMethodWork' class='sumPlan_educMethodWork academNumInput' form='form_educMethodWork'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_educMethodWork' class='sumFact_educMethodWork academNumInput' form='form_educMethodWork'><br>
+    </td>
+  </tr>
+</table></div>
+
+{% endif %}
+
+<p>
+  <div class='academBtn'>
+    <input type='button' value='Добавить строку' onClick='add_row_educMethodWork()' form='form_educMethodWork'>
+    <input type='button' value='Удалить строку' onClick="delRow('tableId_educMethodWork', this.id, 2)" form='form_educMethodWork' id='del_btn_educMethodWork' disabled>
+    <input type='submit' value='Сохранить' form='form_educMethodWork' id='btn_educMethodWork' class='btnSave'>
+  </div>
+  <div class='exampleBtn'>
+    <input type='button' value='Пример' onClick="exampleEducMetod()">
+  </div>
+</p>
+
+<script>
+  function exampleEducMetod()
+  {
+    newWin= window.open("");
+    newWin.document.write("<img src=\"{% static 'plan_tables/images/УчебноМетодическая.png' %}\"/>");
+  }
+</script>
+
+{% endblock %}

@@ -1,0 +1,794 @@
+{% extends 'plan_tables/homePage.html' %}
+
+{% block print_tables %}
+
+<!--  Осень -->
+
+  <div id="printTable">
+
+    <strong><p class='text_font' style='margin-left:500px'>Учебная работа (осень)</p></strong>
+
+    <div style='margin-left:70px'><table border='1' bgcolor='white' id='tableId'>
+      <tr>
+        <th rowspan='2' width='30px'>
+          № п/п
+        </th>
+        <th rowspan='2' width='250px'>
+          Поток, группа
+        </th>
+        <th rowspan='2' width='150px'>
+          Дисциплина
+        </th>
+        <th rowspan='2' width='80px'>
+          Вид работ
+        </th>
+        <th colspan='5'>
+          Кол-во часов по видам уч. работы (плановое)
+        </th>
+        <th colspan='2'>
+          Всего
+        </th>
+      </tr>
+      <tr>
+        <th width='70px'>сентябрь</th>
+        <th width='70px'>октябрь</th>
+        <th width='70px'>ноябрь</th>
+        <th width='70px'>декабрь</th>
+        <th width='70px'>январь</th>
+        <th width='70px'>план</th>
+        <th width='70px'>факт.</th>
+      </tr>
+      {% for i in fallWorkQuerySet %}
+      <tr>
+        <td>
+          {{i.num_p}}
+        </td>
+        <td>
+          {{i.group}}
+        </td>
+        <td>
+          {{i.discipline}}
+        </td>
+        <td>
+          {{i.workType}}
+        </td>
+        <td>
+          <input type='number' name='sep_{{ i.num_p }}' class='sep' form='form_fall' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.september }}'>
+        </td>
+        <td>
+          <input type='number' name='oct_{{ i.num_p }}' class='oct' form='form_fall' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.october }}'>
+        </td>
+        <td>
+          <input type='number' name='nov_{{ i.num_p }}' class='nov' form='form_fall' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.november }}'>
+        </td>
+        <td>
+          <input type='number' name='dec_{{ i.num_p }}' class='dec' form='form_fall' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.december }}'>
+        </td>
+        <td>
+          <input type='number' name='jan_{{ i.num_p }}' class='jan' form='form_fall' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.januar }}'>
+        </td>
+        <td>
+          <input type='number' id='count_{{ i.num_p }}' name='sumplan_{{ i.num_p }}' class='sum_plan' form='form_fall' style='-moz-appearance: textfield;border:none;width:70px' readonly>
+        </td>
+        <td>
+          <input type='number' id='fact_{{ i.num_p }}' name="fact_{{ i.num_p }}" class='fact_work' form='form_fall' style='-moz-appearance: textfield;border:none;width:70px' value='{{ i.fact }}'>
+        </td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan='9' align='right' style='padding-right:71px'>
+          Всего по плану:
+        </td>
+        <td>
+          <input name='sumplan_all' type='number' class='all_plan' form='form_fall' style='-moz-appearance: textfield;border:none;width:70px' readonly>
+        </td>
+        <td bgcolor='grey'>
+        </td>
+      </tr>
+      <tr>
+        <td colspan='9' align='right'>
+          Фактическое выполнение:
+        </td>
+        <td bgcolor='grey'>
+        </td>
+        <td>
+          <input name='sumfact_all' type='number' class='all_fact' form='form_fall' style='-moz-appearance: textfield;border:none;width:70px' readonly>
+        </td>
+      </tr>
+    </table></div>
+
+<!--  Осень почасовая -->
+
+<strong><p class='text_font' style='margin-left:500px'>Работа по совместительству или с почасовой оплатой (осень)</p></strong>
+
+<form action='' method='post' id='form_fallHourly'>
+  {% csrf_token %}
+</form>
+<div style='margin-left:70px'><table border='1' bgcolor='white' id='table_fallHourly'>
+  <tr>
+    <th rowspan='2' width='30px'>
+      № п/п
+    </th>
+    <th rowspan='2' width='250px'>
+      Поток, группа
+    </th>
+    <th rowspan='2' width='150px'>
+      Дисциплина
+    </th>
+    <th rowspan='2' width='80px'>
+      Вид работ
+    </th>
+    <th colspan='5'>
+      Кол-во часов по видам уч. работы (плановое)
+    </th>
+    <th rowspan='2' width='70px'>
+      Всего
+    </th>
+  </tr>
+  <tr>
+    <th width='70px'>сентябрь</th>
+    <th width='70px'>октябрь</th>
+    <th width='70px'>ноябрь</th>
+    <th width='70px'>декабрь</th>
+    <th width='70px'>январь</th>
+  </tr>
+{% for i in fallHourlyWorkQuerySet %}
+  <tr>
+    <td>
+      <input type='text' name="num_p_fallHourly_{{ i.num_p }}" form='form_fallHourly' value='{{ i.num_p }}' style='width:80%;border:none' readonly>
+    </td>
+    <td>
+      <textarea  name='flow_fallHourly_{{ i.num_p }}' form='form_fallHourly' value='{{ i.group }}' cols='40' rows='1' style='resize:none;width:98%'>{{ i.group }}</textarea>
+    </td>
+    <td>
+      <input type='text' name='disc_fallHourly_{{ i.num_p }}' form='form_fallHourly' value='{{ i.discipline }}' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='text' name='worktype_fallHourly_{{ i.num_p }}' form='form_fallHourly' value='{{ i.workType }}' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='number' name='sep_fallHourly_{{ i.num_p }}' id='sep_fallHourly_{{ i.num_p }}' class='sep_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.september }}'>
+    </td>
+    <td>
+      <input type='number' name='oct_fallHourly_{{ i.num_p }}' id='oct_fallHourly_{{ i.num_p }}' class='oct_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.october }}'>
+    </td>
+    <td>
+      <input type='number' name='nov_fallHourly_{{ i.num_p }}' id='nov_fallHourly_{{ i.num_p }}' class='nov_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.november }}'>
+    </td>
+    <td>
+      <input type='number' name='dec_fallHourly_{{ i.num_p }}' id='dec_fallHourly_{{ i.num_p }}' class='dec_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.december }}'>
+    </td>
+    <td>
+      <input type='number' name='jan_fallHourly_{{ i.num_p }}' id='jan_fallHourly_{{ i.num_p }}' class='jan_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.januar }}'>
+    </td>
+    <td>
+      <input type='number' id='count_fallHourly_{{ i.num_p }}' name="sumfact_fallHourly_{{ i.num_p }}" class='sum_fact_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.fact }}'>
+    </td>
+  </tr>
+
+{% endfor %}
+  <tr>
+    <td colspan='4' align='right'>
+      Всего отработано за месяц:
+    </td>
+    <td>
+      <input type='number' name='sep_all_fallHourly' class='sep_all_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='oct_all_fallHourly' class='oct_all_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='nov_all_fallHourly' class='nov_all_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='dec_all_fallHourly' class='dec_all_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='jan_all_fallHourly' class='jan_all_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td colspan='2'>
+      <input type='number' name='sumfact_all_fallHourly' class='sumfact_all_fallHourly' form='form_fallHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+  </tr>
+</table></div>
+
+<p style='overflow:hidden;page-break-before:always;'></p>
+
+<!--  Весна -->
+
+<strong><p class='text_font' style='margin-left:500px'>Учебная работа (весна)</p></strong>
+
+<form action='' method='post' id='form_spring'>
+  {% csrf_token %}
+</form>
+<div style='margin-left:70px'><table border='1' bgcolor='white' id='tableId_spring'>
+  <tr>
+    <th rowspan='2' width='30px'>
+      № п/п
+    </th>
+    <th rowspan='2' width='250px'>
+      Поток, группа
+    </th>
+    <th rowspan='2' width='150px'>
+      Дисциплина
+    </th>
+    <th rowspan='2' width='80px'>
+      Вид работ
+    </th>
+    <th colspan='7'>
+      Кол-во часов по видам уч. работы (плановое)
+    </th>
+    <th colspan='2'>
+      Всего
+    </th>
+  </tr>
+  <tr>
+    <th width='70px'>февраль</th>
+    <th width='70px'>март</th>
+    <th width='70px'>апрель</th>
+    <th width='70px'>май</th>
+    <th width='70px'>июнь</th>
+    <th width='70px'>июль</th>
+    <th width='70px'>август</th>
+    <th width='70px'>план</th>
+    <th width='70px'>факт.</th>
+  </tr>
+{% for i in springWorkQuerySet %}
+  <tr>
+    <td>
+      <input type='text' name="num_p_spring_{{ i.num_p }}" form='form_spring' value='{{ i.num_p }}' style='width:80%;border:none' readonly>
+    </td>
+    <td>
+      <textarea  name='flow_spring_{{ i.num_p }}' form='form_spring' value='{{ i.group }}' cols='40' rows='1' style='resize:none;width:98%'>{{ i.group }}</textarea>
+    </td>
+    <td>
+      <input type='text' name='disc_spring_{{ i.num_p }}' form='form_spring' value='{{ i.discipline }}' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='text' name='worktype_spring_{{ i.num_p }}' form='form_spring' value='{{ i.workType }}' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='number' name='feb_{{ i.num_p }}' class='feb' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.february }}'>
+    </td>
+    <td>
+      <input type='number' name='mar_{{ i.num_p }}' class='mar' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.march }}'>
+    </td>
+    <td>
+      <input type='number' name='apr_{{ i.num_p }}' class='apr' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.april }}'>
+    </td>
+    <td>
+      <input type='number' name='may_{{ i.num_p }}' class='may' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.may }}'>
+    </td>
+    <td>
+      <input type='number' name='jun_{{ i.num_p }}' class='jun' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.june }}'>
+    </td>
+    <td>
+      <input type='number' name='jul_{{ i.num_p }}' class='jul' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.july }}'>
+    </td>
+    <td>
+      <input type='number' name='aug_{{ i.num_p }}' class='aug' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.august }}'>
+    </td>
+    <td>
+      <input type='number' id='count_spring_{{ i.num_p }}' name='sumplan_spring_{{ i.num_p }}' class='sum_plan_spring' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' id='fact_spring_{{ i.num_p }}' name="fact_spring_{{ i.num_p }}" class='fact_work_spring' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.fact }}'>
+    </td>
+  </tr>
+
+{% endfor %}
+  <tr>
+    <td colspan='11' align='right' style='padding-right:71px'>
+      Всего по плану:
+    </td>
+    <td>
+      <input type='number' name='sumplan_all_spring' class='all_plan_spring' form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td bgcolor='grey'>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='11' align='right' class='text_font'>
+      Фактическое выполнение:
+    </td>
+    <td bgcolor='grey'>
+    </td>
+    <td>
+      <input type='number' name='sumfact_all_spring' class="all_fact_spring" form='form_spring' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+  </tr>
+  </table></div>
+
+<!--  Весна почасовая -->
+
+<strong><p class='text_font' style='margin-left:500px'>Работа по совместительству или с почасовой оплатой (весна)</p></strong>
+<form action='' method='post' id='form_springHourly'>
+  {% csrf_token %}
+</form>
+<div style='margin-left:70px'><table border='1' bgcolor='white' id='table_springHourly'>
+  <tr>
+    <th rowspan='2' width='30px'>
+      № п/п
+    </th>
+    <th rowspan='2' width='250px'>
+      Поток, группа
+    </th>
+    <th rowspan='2' width='150px'>
+      Дисциплина
+    </th>
+    <th rowspan='2' width='80px'>
+      Вид работ
+    </th>
+    <th colspan='7'>
+      Кол-во часов по видам уч. работы (плановое)
+    </th>
+    <th rowspan='2' width='70px'>
+      Всего
+    </th>
+  </tr>
+  <tr>
+    <th width='70px'>февраль</th>
+    <th width='70px'>март</th>
+    <th width='70px'>апрель</th>
+    <th width='70px'>май</th>
+    <th width='70px'>июнь</th>
+    <th width='70px'>июль</th>
+    <th width='70px'>август</th>
+  </tr>
+{% for i in springHourlyWorkQuerySet %}
+  <tr>
+    <td>
+      <input type='text' name="num_p_springHourly_{{ i.num_p }}" form='form_springHourly' value='{{ i.num_p }}' style='width:80%;border:none' readonly>
+    </td>
+    <td>
+      <textarea  name='flow_springHourly_{{ i.num_p }}' form='form_springHourly' value='{{ i.group }}' cols='40' rows='1' style='resize:none;width:98%'>{{ i.group }}</textarea>
+    </td>
+    <td>
+      <input type='text' name='disc_springHourly_{{ i.num_p }}' form='form_springHourly' value='{{ i.discipline }}' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='text' name='worktype_springHourly_{{ i.num_p }}' form='form_springHourly' value='{{ i.workType }}' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='number' name='feb_springHourly_{{ i.num_p }}' id='feb_springHourly_{{ i.num_p }}' class='feb_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.february }}'>
+    </td>
+    <td>
+      <input type='number' name='mar_springHourly_{{ i.num_p }}' id='mar_springHourly_{{ i.num_p }}' class='mar_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.march }}'>
+    </td>
+    <td>
+      <input type='number' name='apr_springHourly_{{ i.num_p }}' id='apr_springHourly_{{ i.num_p }}' class='apr_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.april }}'>
+    </td>
+    <td>
+      <input type='number' name='may_springHourly_{{ i.num_p }}' id='may_springHourly_{{ i.num_p }}' class='may_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.may }}'>
+    </td>
+    <td>
+      <input type='number' name='jun_springHourly_{{ i.num_p }}' id='jun_springHourly_{{ i.num_p }}' class='jun_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.june }}'>
+    </td>
+    <td>
+      <input type='number' name='jul_springHourly_{{ i.num_p }}' id='jul_springHourly_{{ i.num_p }}' class='jul_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.july }}'>
+    </td>
+    <td>
+      <input type='number' name='aug_springHourly_{{ i.num_p }}' id='aug_springHourly_{{ i.num_p }}' class='aug_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.august }}'>
+    </td>
+    <td>
+      <input type='number' id='count_springHourly_{{ i.num_p }}' name="sumfact_springHourly_{{ i.num_p }}" class='sum_plan_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.fact }}'>
+    </td>
+  </tr>
+
+{% endfor %}
+  <tr>
+    <td colspan='4' align='right'>
+      Всего отработано за месяц:
+    </td>
+    <td>
+      <input type='number' name='feb_all_springHourly' class='feb_all_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='mar_all_springHourly' class='mar_all_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='apr_all_springHourly' class='apr_all_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='may_all_springHourly' class='may_all_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='jun_all_springHourly' class='jun_all_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='jul_all_springHourly' class='jul_all_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td>
+      <input type='number' name='aug_all_springHourly' class='aug_all_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+    <td colspan='2'>
+      <input type='number' name='sumfact_all_springHourly' class='sumfact_all_springHourly' form='form_springHourly' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+    </td>
+  </tr>
+</table></div>
+
+<p style='overflow:hidden;page-break-before:always;'></p>
+
+<!-- Учебно-методическая -->
+
+<strong><p class='text_font' style='margin-left:500px'>Учебно-методическая работа</p></strong>
+
+<form action='' method='post' id='form_educMethodWork'>
+  {% csrf_token %}
+</form>
+
+<div style='margin-left:70px'><table border='1' bgcolor='white' id='tableId_educMethodWork'>
+  <tr>
+    <th style='width:30px'>
+      № п/п
+    </th>
+    <th style='width:600px'>
+      Наименование мероприятия
+    </th>
+    <th style='width:150px'>
+      Срок исполнения
+    </th>
+    <th style='width:150px'>
+      Отметка о <br>выполнении
+    </th>
+    <th style='width:90px'>
+      Плановая<br> нагрузка
+    </th>
+    <th style='width:90px'>
+      Фактическая<br> нагрузка
+    </th>
+  </tr>
+
+{% for i in educMethodWorkQuerySet %}
+
+  <tr>
+    <td>
+      <input type='text' name="num_p_educMethodWork_{{ i.num_p }}" form='form_educMethodWork' value='{{ i.num_p }}' style='width:80%;border:none' readonly>
+    </td>
+    <td>
+      <textarea  name='eventName_educMethodWork_{{ i.num_p }}' form='form_educMethodWork' cols='40' rows='1' style='resize:none;width:98%'>{{ i.eventName }}</textarea>
+      <datalist id='list_name' form='form_educMethodWork'>
+        <option selected disabled>Наименование</option>
+        <option>конспектов лекций</option>
+        <option>сборников для практических и лабораторных занятий</option>
+        <option>раздаточного материала для лекционных и практических занятий</option>
+        <option>методических материалов по выполнению курсовых и дипломных проектов и работ</option>
+        <option>проведения промежуточной и итоговой аттестации</option>
+      </datalist>
+    </td>
+    <td>
+      <input type='text' name='time_educMethodWork_{{ i.num_p }}' value='{{ i.time }}' form='form_educMethodWork' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='text' name='mark_educMethodWork_{{ i.num_p }}' form='form_educMethodWork' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='number' id='count_educMethodWork_{{ i.num_p }}' value='{{ i.plan }}' name='plan_educMethodWork_{{ i.num_p }}' class='sum_plan_educMethodWork' form='form_educMethodWork' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+    <td>
+      <input type='number' id='fact_educMethodWork_{{ i.num_p }}' value='{{ i.fact }}' name='fact_educMethodWork_{{ i.num_p }}' class='fact_work_educMethodWork' form='form_educMethodWork' style='-moz-appearance: textfield;border:none;width:98%'>
+    </td>
+  </tr>
+
+{% endfor %}
+
+  <tr>
+    <td colspan='4' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_educMethodWork' class='sumPlan_educMethodWork' form='form_educMethodWork' style='-moz-appearance: textfield;border:none;width:98%'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_educMethodWork' class='sumFact_educMethodWork' form='form_educMethodWork' style='-moz-appearance: textfield;border:none;width:98%'><br>
+    </td>
+  </tr>
+</table></div>
+
+<!-- Научная -->
+
+<strong><p class='text_font' style='margin-left:500px'>Научная работа</p></strong>
+
+<form action='' method='post' id='form_sciWork'>
+  {% csrf_token %}
+</form>
+
+<div style='margin-left:70px'><table border='1' bgcolor='white' id='tableId_sciWork'>
+  <tr>
+    <th style='width:30px'>
+      № п/п
+    </th>
+    <th style='width:600px'>
+      Наименование мероприятия
+    </th>
+    <th style='width:150px'>
+      В качестве <br>кого участвует
+    </th>
+    <th style='width:150px'>
+      Сроки
+    </th>
+    <th style='width:90px'>
+      Плановая<br> нагрузка
+    </th>
+    <th style='width:90px'>
+      Фактическая<br> нагрузка
+    </th>
+  </tr>
+
+{% for i in sciWorkQuerySet %}
+
+  <tr>
+    <td>
+      <input type='text' name='num_p_sciWork_{{ i.num_p }}' form='form_sciWork' value='{{ i.num_p }}' style='width:80%;border:none' readonly>
+    </td>
+    <td>
+      <textarea name='eventName_sciWork_{{ i.num_p }}' form='form_sciWork' rows='1' cols='40' style='resize:none'>{{ i.eventName }}</textarea>
+    <td>
+      <input type='text' name='performer_sciWork_{{ i.num_p }}' form='form_sciWork' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.as_a }}'>
+    </td>
+    <td>
+      <input type='text' name='time_sciWork_{{ i.num_p }}' form='form_sciWork' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.time }}'>
+    </td>
+    <td>
+      <input type='number' id='count_sciWork_{{ i.num_p }}' name='plan_sciWork_{{ i.num_p }}' class='sum_plan_sciWork' form='form_sciWork' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.plan }}'>
+    </td>
+    <td>
+      <input type='number' id='fact_sciWork_{{ i.num_p }}' name='fact_sciWork_{{ i.num_p }}' class='fact_work_sciWork' form='form_sciWork' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.fact }}'>
+    </td>
+  </tr>
+
+{% endfor %}
+
+  <tr>
+    <td colspan='4' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_sciWork' class='sumPlan_sciWork' form='form_sciWork' style='-moz-appearance: textfield;border:none;width:98%'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_sciWork' class='sumFact_sciWork' form='form_sciWork' style='-moz-appearance: textfield;border:none;width:98%'><br>
+    </td>
+  </tr>
+</table></div>
+
+<!--  Литература -->
+
+<strong><p class='text_font' style='margin-left:500px'>Подготовка и издание учебно-методической литературы</p></strong>
+
+<form action='' method='post' id='form_literature'>
+  {% csrf_token %}
+</form>
+
+<div style='margin-left:70px'><table border='1' bgcolor='white' id='tableId_literature'>
+  <tr>
+    <th style='width:30px'>
+      № п/п
+    </th>
+    <th class='text_font' style='width:250px'>
+      Вид издания
+    </th>
+    <th style='width:250px'>
+      Наименование <br>дисциплины
+    </th>
+    <th style='width:250px'>
+      Код и наименование <br>направления подготовки
+    </th>
+    <th style='width:95px'>
+      Объем <br>(уч. изд. <br>лист)
+    </th>
+    <th style='width:95px'>
+      Тираж, <br>кол-во <br>экземпля-ров
+    </th>
+    <th style='width:95px'>
+      Отметка <br>об издании
+    </th>
+    <th style='width:90px'>
+      Плановая <br>нагрузка
+    </th>
+    <th style='width:90px'>
+      Фактическая <br>нагрузка
+    </th>
+  </tr>
+
+{% for i in litWorkQuerySet %}
+
+<tr>
+  <td>
+    <input type='text' name="num_p_literature_{{ i.num_p }}" form='form_literature' value='{{ i.num_p }}' style='width:80%;border:none' readonly>
+  </td>
+  <td>
+    <input type='text' name="litType_{{ i.num_p }}" form='form_literature' list='list_literatureType' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.pubType }}'>
+    <datalist id='list_literatureType' form='form_literature'>
+      <option selected disabled>Вид издания</option>
+      <option>учебник</option>
+      <option>учебное пособие</option>
+      <option>конспект лекций</option>
+      <option>сборник упражнений</option>
+      <option>сборник текстов</option>
+      <option>лабораторный практикум</option>
+      <option>сборник планов семинарских занятий</option>
+      <option>сборник контрольных заданий</option>
+      <option>методические рекомендации</option>
+      <option>справочное издание</option>
+      <option>альбом</option>
+      <option>монографии</option>
+    </datalist>
+  </td>
+  <td>
+    <input type='text' name="disc_literature_{{ i.num_p }}" form='form_literature' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.disc }}'>
+  </td>
+  <td>
+    <input type='text' name="direction_literature_{{ i.num_p }}" form='form_literature' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.direction }}'>
+  </td>
+  <td>
+    <input type='number' name="amount_literature_{{ i.num_p }}" form='form_literature' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.amount }}'>
+  </td>
+  <td>
+    <input type='number' name="edition_literature_{{ i.num_p }}" form='form_literature' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.edition }}'>
+  </td>
+  <td>
+    <input type='text' name="mark_literature_{{ i.num_p }}" form='form_literature' style='-moz-appearance: textfield;border:none;width:98%'>
+  </td>
+  <td>
+    <input type='number' id='count_literature_{{ i.num_p }}' name='plan_literature_{{ i.num_p }}' class='sum_plan_literature' form='form_literature' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.plan }}'>
+  </td>
+  <td>
+    <input type='number' id='fact_literature_{{ i.num_p }}' name='fact_literature_{{ i.num_p }}' class='fact_work_literature' form='form_literature' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.fact }}'>
+  </td>
+</tr>
+
+{% endfor %}
+
+<tr>
+  <td colspan='7' align='right'>
+    Всего:
+  </td>
+  <td>
+    <input type='number' id='sumPlan_literature' class='sumPlan_literature' form='form_literature' style='-moz-appearance: textfield;border:none;width:98%'><br>
+  </td>
+  <td>
+    <input type='number' id='sumFact_literature' class='sumFact_literature' form='form_literature' style='-moz-appearance: textfield;border:none;width:98%'><br>
+  </td>
+</tr>
+</table></div>
+
+<!-- Другие виды работ -->
+
+  <strong><p class='text_font' style='margin-left:500px'>Другие виды работ</p></strong>
+
+  <form action='' method='post' id='form_otherWork'>
+    {% csrf_token %}
+  </form>
+
+  <div style='margin-left:70px'><table border='1' bgcolor='white' id='tableId_otherWork'>
+    <tr>
+      <th style='width:30px'>
+        № п/п
+      </th>
+      <th style='width:400px'>
+        Наименование работы
+      </th>
+      <th style='width:150px'>
+        Дата выполнения <br>работы
+      </th>
+      <th style='width:90px'>
+        Плановая <br>нагрузка
+      </th>
+      <th style='width:90px'>
+        Фактическая <br>нагрузка
+      </th>
+    </tr>
+
+  {% for i in otherWorkQuerySet %}
+
+  <tr>
+    <td>
+      <input type='text' name="num_p_otherWork_{{ i.num_p }}" form='form_otherWork' value='{{ i.num_p }}' style='width:80%;border:none' readonly>
+    </td>
+    <td>
+      <input type='text' name="nameWork_otherWork_{{ i.num_p }}" form='form_otherWork' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.workName }}'>
+    </td>
+    <td>
+      <input type='text' name="date_otherWork_{{ i.num_p }}" form='form_otherWork' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.time }}'>
+    </td>
+    <td>
+      <input type='number' id='count_otherWork_{{ i.num_p }}' name='plan_otherWork_{{ i.num_p }}' class='sum_plan_otherWork' form='form_otherWork' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.plan }}'>
+    </td>
+    <td>
+      <input type='number' id='fact_otherWork_{{ i.num_p }}' name='fact_otherWork_{{ i.num_p }}' class='fact_work_otherWork' form='form_otherWork' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.fact }}'>
+    </td>
+  </tr>
+
+  {% endfor %}
+  <tr>
+    <td colspan='3' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_otherWork' class='sumPlan_otherWork' form='form_otherWork' style='-moz-appearance: textfield;border:none;width:98%'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_otherWork' class='sumFact_otherWork' form='form_otherWork' style='-moz-appearance: textfield;border:none;width:98%'><br>
+    </td>
+  </tr>
+  </table></div>
+
+<!--  Повышение квалификации -->
+
+<strong><p class='text_font' style='margin-left:500px'>Повышение квалификации</p></strong>
+
+<form action='' method='post' id='form_training'>
+  {% csrf_token %}
+</form>
+
+<div style='margin-left:70px'><table border='1' bgcolor='white' id='tableId_training'>
+  <tr>
+    <th style='width:30px'>
+      № п/п
+    </th>
+    <th style='width:170px'>
+      Период повышения <br>квалификации
+    </th>
+    <th style='width:400px'>
+      Вид повышения квалификации
+    </th>
+    <th style='width:250px'>
+      Предприятие <br>(организация, учреждение)
+    </th>
+    <th style='width:90px'>
+      Плановая <br>нагрузка
+    </th>
+    <th style='width:90px'>
+      Фактическая <br>нагрузка
+    </th>
+  </tr>
+
+{% for i in trainingWorkQuerySet %}
+
+<tr>
+  <td>
+    <input type='text' name="num_p_training_{{ i.num_p }}" form='form_training' value='{{ i.num_p }}' style='-moz-appearance: textfield;border:none;width:98%' readonly>
+  </td>
+  <td>
+    <input type='text' name="period_training_{{ i.num_p }}" form='form_training' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.time }}'>
+  </td>
+  <td>
+    <input type='text' name="type_training_{{ i.num_p }}" form='form_training' list='list_trainingType' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.trainingType }}'>
+    <datalist id='list_trainingType' form='form_training'>
+      <option selected disabled>Вид повышения</option>
+      <option>обучение по дополнительной образовательной программе</option>
+      <option>стажировка</option>
+    </datalist>
+  </td>
+  <td>
+    <input type='text' name="company_training_{{ i.num_p }}" form='form_training' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.company }}'>
+  </td>
+  <td>
+    <input type='number' id='count_training_{{ i.num_p }}' name='plan_training_{{ i.num_p }}' class='sum_plan_training' form='form_training' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.plan }}'>
+  </td>
+  <td>
+    <input type='number' id='fact_training_{{ i.num_p }}' name='fact_training_{{ i.num_p }}' class='fact_work_training' form='form_training' style='-moz-appearance: textfield;border:none;width:98%' value='{{ i.fact }}'>
+  </td>
+</tr>
+
+{% endfor %}
+
+<tr>
+  <td colspan='4' align='right'>
+    Всего:
+  </td>
+  <td>
+    <input type='number' id='sumPlan_training' class='sumPlan_training' form='form_training' style='-moz-appearance: textfield;border:none;width:98%'><br>
+  </td>
+  <td>
+    <input type='number' id='sumFact_training' class='sumFact_training' form='form_training' style='-moz-appearance: textfield;border:none;width:98%'><br>
+  </td>
+</tr>
+</table></div>
+
+  </div>
+
+  <p><center><input type='button' value='Печать' onClick='printData()'></center></p>
+
+{% endblock %}

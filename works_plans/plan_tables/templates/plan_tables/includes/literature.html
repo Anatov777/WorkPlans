@@ -1,0 +1,210 @@
+{% block content %}
+
+{% if litWorkQuerySet %}
+
+<strong><div class='parHead'>Подготовка и издание учебно-методической литературы</div></strong>
+
+<form action='' method='post' id='form_literature'>
+  {% csrf_token %}
+</form>
+
+<div><table border='1' id='tableId_literature'>
+  <tr>
+    <th style='width:30px'>
+      № <br> п/п
+    </th>
+    <th style='width:250px'>
+      Вид издания*
+    </th>
+    <th style='width:250px'>
+      Наименование <br>дисциплины
+    </th>
+    <th style='width:250px'>
+      Код и наименование <br>направления подготовки
+    </th>
+    <th>
+      Объем <br>(уч. изд. <br>лист)
+    </th>
+    <th>
+      Тираж, <br>кол-во <br>экземпляров
+    </th>
+    <th style='width:95px'>
+      Отметка <br>об издании
+    </th>
+    <th>
+      План
+    </th>
+    <th>
+      Факт.
+    </th>
+  </tr>
+
+{% for i in litWorkQuerySet %}
+
+<tr>
+  <td>
+    <input type='text' name="num_p_literature_{{ i.num_p }}" class='academNumP' form='form_literature' value='{{ i.num_p }}' readonly>
+  </td>
+  <td>
+    <input type='text' name="litType_{{ i.num_p }}" class='academTextarea' form='form_literature' list='list_literatureType' value='{{ i.pubType }}'>
+    <datalist id='list_literatureType' form='form_literature'>
+      <option selected disabled>Вид издания</option>
+      <option>учебник</option>
+      <option>учебное пособие</option>
+      <option>конспект лекций</option>
+      <option>сборник упражнений</option>
+      <option>сборник текстов</option>
+      <option>лабораторный практикум</option>
+      <option>сборник планов семинарских занятий</option>
+      <option>сборник контрольных заданий</option>
+      <option>методические рекомендации</option>
+      <option>справочное издание</option>
+      <option>альбом</option>
+      <option>монографии</option>
+    </datalist>
+  </td>
+  <td>
+    <input type='text' name="disc_literature_{{ i.num_p }}" class='academTextarea' form='form_literature' value='{{ i.disc }}'>
+  </td>
+  <td>
+    <input type='text' name="direction_literature_{{ i.num_p }}" class='academTextarea' form='form_literature' value='{{ i.direction }}'>
+  </td>
+  <td>
+    <input type='number' name="amount_literature_{{ i.num_p }}" class='academNumInput' form='form_literature' value='{{ i.amount }}'>
+  </td>
+  <td>
+    <input type='number' name="edition_literature_{{ i.num_p }}" class='academNumInput editionLit' form='form_literature' value='{{ i.edition }}'>
+  </td>
+  <td>
+    <input type='text' name="mark_literature_{{ i.num_p }}" class='academTextarea' form='form_literature'> </td>
+  <td>
+    <input type='number' id='count_literature_{{ i.num_p }}' name='plan_literature_{{ i.num_p }}' class='sum_plan_literature academNumInput' form='form_literature' value='{{ i.plan }}'>
+  </td>
+  <td>
+    <input type='number' id='fact_literature_{{ i.num_p }}' name='fact_literature_{{ i.num_p }}' class='fact_work_literature academNumInput' form='form_literature' value='{{ i.fact }}'>
+  </td>
+</tr>
+
+{% endfor %}
+
+<tr>
+  <td colspan='7' align='right'>
+    Всего:
+  </td>
+  <td>
+    <input type='number' id='sumPlan_literature' class='sumPlan_literature academNumInput' form='form_literature'><br>
+  </td>
+  <td>
+    <input type='number' id='sumFact_literature' class='sumFact_literature academNumInput' form='form_literature'><br>
+  </td>
+</tr>
+</table></div>
+
+{% else %}
+
+<strong><div class='parHead'>Подготовка и издание учебно-методической литературы</div></strong>
+
+<form action='' method='post' id='form_literature'>
+  {% csrf_token %}
+</form>
+
+<div><table border='1' id='tableId_literature'>
+  <tr>
+    <th style='width:30px'>
+      № <br> п/п
+    </th>
+    <th style='width:250px'>
+      Вид издания*
+    </th>
+    <th style='width:250px'>
+      Наименование <br>дисциплины
+    </th>
+    <th style='width:250px'>
+      Код и наименование <br>направления подготовки
+    </th>
+    <th>
+      Объем <br>(уч. изд. <br>лист)
+    </th>
+    <th>
+      Тираж, <br>кол-во <br>экземпляров
+    </th>
+    <th style='width:95px'>
+      Отметка <br>об издании
+    </th>
+    <th>
+      План
+    </th>
+    <th>
+      Факт.
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <input type='text' name="num_p_literature_1" class='academNumP' form='form_literature' value='1' readonly>
+    </td>
+    <td>
+      <input type='text' name="litType_1" class='academTextarea' form='form_literature' list='list_literatureType'>
+      <datalist id='list_literatureType' form='form_literature'>
+        <option selected disabled>Вид издания</option>
+        <option>учебник</option>
+        <option>учебное пособие</option>
+        <option>конспект лекций</option>
+        <option>сборник упражнений</option>
+        <option>сборник текстов</option>
+        <option>лабораторный практикум</option>
+        <option>сборник планов семинарских занятий</option>
+        <option>сборник контрольных заданий</option>
+        <option>методические рекомендации</option>
+        <option>справочное издание</option>
+        <option>альбом</option>
+        <option>монографии</option>
+      </datalist>
+    </td>
+    <td>
+      <input type='text' name="disc_literature_1" class='academTextarea' form='form_literature'>
+    </td>
+    <td>
+      <input type='text' name="direction_literature_1" class='academTextarea' form='form_literature'>
+    </td>
+    <td>
+      <input type='number' name="amount_literature_1" class='academNumInput' form='form_literature'>
+    </td>
+    <td>
+      <input type='number' name="edition_literature_1" class='academNumInput editionLit' form='form_literature'>
+    </td>
+    <td>
+      <input type='text' name="mark_literature_1" class='academTextarea' form='form_literature'>
+    </td>
+    <td>
+      <input type='number' id='count_literature_1' name='plan_literature_1' class='sum_plan_literature academNumInput' form='form_literature'>
+    </td>
+    <td>
+      <input type='number' id='fact_literature_1' name='fact_literature_1' class='fact_work_literature academNumInput' form='form_literature'>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='7' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_literature' class='sumPlan_literature academNumInput' form='form_literature'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_literature' class='sumFact_literature academNumInput' form='form_literature'><br>
+    </td>
+  </tr>
+</table></div>
+
+{% endif %}
+
+<div class='academBtn'>
+  <input type='button' value='Добавить строку' onClick='add_row_literature()' form='form_literature'>
+  <input type='button' value='Удалить строку' onClick="delRow('tableId_literature', this.id, 2)" form='form_literature' id='del_btn_literature' disabled>
+  <input type='submit' value='Сохранить' form='form_literature' id='btn_literature' class='btnSave'>
+</div>
+
+<p class='notes'>* Виды изданий – учебник, учебное пособие, конспект лекций, сборник упражнений, сборник текстов, лабораторный практикум,<br>
+  сборник планов семинарских занятий, сборник контрольных заданий, методические рекомендации, справочное издание, альбом, монографии.
+<p>
+
+{% endblock %}

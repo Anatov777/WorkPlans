@@ -1,0 +1,156 @@
+{% block content %}
+
+{% if trainingWorkQuerySet %}
+
+<strong><div class='parHead'>Повышение квалификации</div></strong>
+
+<form action='' method='post' id='form_training'>
+  {% csrf_token %}
+</form>
+
+<div><table border='1' id='tableId_training'>
+  <tr>
+    <th style='width:30px'>
+      № <br> п/п
+    </th>
+    <th style='width:170px'>
+      Период повышения <br>квалификации
+    </th>
+    <th style='width:400px'>
+      Вид повышения квалификации*
+    </th>
+    <th style='width:210px'>
+      Предприятие <br>(организация, учреждение)
+    </th>
+    <th>
+      План
+    </th>
+    <th>
+      Факт.
+    </th>
+  </tr>
+
+{% for i in trainingWorkQuerySet %}
+
+<tr>
+  <td>
+    <input type='text' name="num_p_training_{{ i.num_p }}" class='academNumP' form='form_training' value='{{ i.num_p }}' readonly>
+  </td>
+  <td>
+    <input type='text' name="period_training_{{ i.num_p }}" class='academTextarea' form='form_training' value='{{ i.time }}'>
+  </td>
+  <td>
+    <input type='text' name="type_training_{{ i.num_p }}" class='academTextarea' form='form_training' list='list_trainingType' value='{{ i.trainingType }}'>
+    <datalist id='list_trainingType' form='form_training'>
+      <option selected disabled>Вид повышения</option>
+      <option>обучение по дополнительной образовательной программе</option>
+      <option>стажировка</option>
+    </datalist>
+  </td>
+  <td>
+    <input type='text' name="company_training_{{ i.num_p }}" form='form_training' class='academTextarea' value='{{ i.company }}'>
+  </td>
+  <td>
+    <input type='number' id='count_training_{{ i.num_p }}' name='plan_training_{{ i.num_p }}' class='sum_plan_training academNumInput' form='form_training' value='{{ i.plan }}'>
+  </td>
+  <td>
+    <input type='number' id='fact_training_{{ i.num_p }}' name='fact_training_{{ i.num_p }}' class='fact_work_training academNumInput' form='form_training' value='{{ i.fact }}'>
+  </td>
+</tr>
+
+{% endfor %}
+
+<tr>
+  <td colspan='4' align='right'>
+    Всего:
+  </td>
+  <td>
+    <input type='number' id='sumPlan_training' class='sumPlan_training academNumInput' form='form_training'><br>
+  </td>
+  <td>
+    <input type='number' id='sumFact_training' class='sumFact_training academNumInput' form='form_training'><br>
+  </td>
+</tr>
+</table></div>
+
+{% else %}
+
+<strong><div class='parHead'>Повышение квалификации</div></strong>
+
+<form action='' method='post' id='form_training'>
+  {% csrf_token %}
+</form>
+
+<div><table border='1' id='tableId_training'>
+  <tr>
+    <th style='width:30px'>
+      № <br> п/п
+    </th>
+    <th style='width:170px'>
+      Период повышения <br>квалификации
+    </th>
+    <th style='width:400px'>
+      Вид повышения квалификации*
+    </th>
+    <th style='width:210px'>
+      Предприятие <br>(организация, учреждение)
+    </th>
+    <th>
+      План
+    </th>
+    <th>
+      Факт.
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <input type='text' name="num_p_training_1" class='academNumP' form='form_training' value='1' readonly>
+    </td>
+    <td>
+      <input type='text' name="period_training_1" class='academTextarea' form='form_training'>
+    </td>
+    <td>
+      <input type='text' name="type_training_1" class='academTextarea' form='form_training' list='list_trainingType'>
+      <datalist id='list_trainingType' form='form_training'>
+        <option selected disabled>Вид повышения</option>
+        <option>обучение по дополнительной образовательной программе</option>
+        <option>стажировка</option>
+      </datalist>
+    </td>
+    <td>
+      <input type='text' name="company_training_1" class='academTextarea' form='form_training'>
+    </td>
+    <td>
+      <input type='number' id='count_training_1' name='plan_training_1' class='sum_plan_training academNumInput' form='form_training'>
+    </td>
+    <td>
+      <input type='number' id='fact_training_1' name='fact_training_1' class='fact_work_training academNumInput' form='form_training'>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='4' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_training' class='sumPlan_training academNumInput' form='form_training'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_training' class='sumFact_training academNumInput' form='form_training'><br>
+    </td>
+  </tr>
+</table></div>
+
+{% endif %}
+
+<div class='academBtn'>
+  <input type='button' value='Добавить строку' onClick='add_row_training()' form='form_training'>
+  <input type='button' value='Удалить строку' onClick="delRow('tableId_training', this.id, 2)" form='form_training' id='del_btn_training' disabled>
+  <input type='submit' value='Сохранить' form='form_training' id='btn_training' class='btnSave'>
+</div>
+
+<p class='notes'>* Вид повышения квалификации:<br>
+- обучение по дополнительной образовательной программе<br>
+- стажировка
+<p>
+
+{% endblock %}

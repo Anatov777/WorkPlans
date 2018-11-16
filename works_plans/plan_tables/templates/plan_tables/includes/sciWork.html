@@ -1,0 +1,151 @@
+{% block content %}
+{% load static %}
+
+{% if sciWorkQuerySet %}
+
+<strong><div class='parHead'>Научная работа</div></strong>
+
+<form action='' method='post' id='form_sciWork'>
+  {% csrf_token %}
+</form>
+
+<div><table border='1' id='tableId_sciWork'>
+  <tr>
+    <th style='width:30px'>
+      № <br> п/п
+    </th>
+    <th style='width:530px'>
+      Наименование мероприятия
+    </th>
+    <th style='width:170px'>
+      В качестве <br>кого участвует
+    </th>
+    <th style='width:150px'>
+      Сроки
+    </th>
+    <th>
+      План
+    </th>
+    <th>
+      Факт.
+    </th>
+  </tr>
+
+{% for i in sciWorkQuerySet %}
+
+  <tr>
+    <td>
+      <input type='text' name='num_p_sciWork_{{ i.num_p }}' class='academNumP' form='form_sciWork' value='{{ i.num_p }}' readonly>
+    </td>
+    <td>
+      <textarea name='eventName_sciWork_{{ i.num_p }}' class='academTextarea' form='form_sciWork' rows='1' cols='40'>{{ i.eventName }}</textarea>
+    <td>
+      <input type='text' name='performer_sciWork_{{ i.num_p }}' class='academTextarea' form='form_sciWork' value='{{ i.as_a }}'>
+    </td>
+    <td>
+      <input type='text' name='time_sciWork_{{ i.num_p }}' class='academTextarea' form='form_sciWork' value='{{ i.time }}'>
+    </td>
+    <td>
+      <input type='number' id='count_sciWork_{{ i.num_p }}' name='plan_sciWork_{{ i.num_p }}' class='sum_plan_sciWork academNumInput' form='form_sciWork' value='{{ i.plan }}'>
+    </td>
+    <td>
+      <input type='number' id='fact_sciWork_{{ i.num_p }}' name='fact_sciWork_{{ i.num_p }}' class='fact_work_sciWork academNumInput' form='form_sciWork' value='{{ i.fact }}'>
+    </td>
+  </tr>
+
+{% endfor %}
+
+  <tr>
+    <td colspan='4' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_sciWork' class='sumPlan_sciWork academNumInput' form='form_sciWork'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_sciWork' class='sumFact_sciWork academNumInput' form='form_sciWork'><br>
+    </td>
+  </tr>
+</table></div>
+
+{% else %}
+
+<strong><div class='parHead'>Научная работа</div></strong>
+
+<form action='' method='post' id='form_sciWork'>
+  {% csrf_token %}
+</form>
+
+<div><table border='1' id='tableId_sciWork'>
+  <tr>
+    <th style='width:30px'>
+      № <br> п/п
+    </th>
+    <th style='width:530px'>
+      Наименование мероприятия
+    </th>
+    <th style='width:170px'>
+      В качестве <br>кого участвует
+    </th>
+    <th style='width:150px'>
+      Сроки
+    </th>
+    <th>
+      План
+    </th>
+    <th>
+      Факт.
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <input type='text' name='num_p_sciWork_1' class='academNumP' form='form_sciWork' value='1' readonly>
+    </td>
+    <td>
+      <textarea name='eventName_sciWork_1' class='academTextarea' form='form_sciWork' rows='1' cols='40'></textarea>
+    <td>
+      <input type='text' name='performer_sciWork_1' class='academTextarea' form='form_sciWork'>
+    </td>
+    <td>
+      <input type='text' name='time_sciWork_1' class='academTextarea' form='form_sciWork'>
+    </td>
+    <td>
+      <input type='number' id='count_sciWork_1' name='plan_sciWork_1' class='sum_plan_sciWork academNumInput' form='form_sciWork'>
+    </td>
+    <td>
+      <input type='number' id='fact_sciWork_1' name='fact_sciWork_1' class='fact_work_sciWork academNumInput' form='form_sciWork'>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='4' align='right'>
+      Всего:
+    </td>
+    <td>
+      <input type='number' id='sumPlan_sciWork' class='sumPlan_sciWork academNumInput' form='form_sciWork'><br>
+    </td>
+    <td>
+      <input type='number' id='sumFact_sciWork' class='sumFact_sciWork academNumInput' form='form_sciWork'><br>
+    </td>
+  </tr>
+</table></div>
+
+{% endif %}
+
+<div class='academBtn'>
+  <input type='button' value='Добавить строку' onClick='add_row_sciWork()' form='form_sciWork'>
+  <input type='button' value='Удалить строку' onClick="delRow('tableId_sciWork', this.id, 2)" form='form_sciWork' id='del_btn_sciWork' disabled>
+  <input type='submit' value='Сохранить' form='form_sciWork' id='btn_sciWork' class='btnSave'>
+</div>
+<div class='exampleBtn'>
+  <input type='button' value='Пример' onClick='exampleSci()'>
+</div>
+
+<script>
+  function exampleSci()
+  {
+    newWin= window.open("");
+    newWin.document.write("<img src=\"{% static 'plan_tables/images/Научная.png' %}\"/>");
+  }
+</script>
+
+{% endblock %}

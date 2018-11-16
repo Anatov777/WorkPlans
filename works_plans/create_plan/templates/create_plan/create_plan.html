@@ -1,0 +1,22 @@
+{% extends 'plan_tables/homePage.html' %}
+
+{% block create_plan %}
+
+  <form action="" method="post" id='formSelectCreateYear'>{% csrf_token %}
+    <p style='margin-left:5%;margin-top:5%;'>
+      <select name="selectYearCreate" form='formSelectCreateYear' onChange="$('#idChooseDateOpton').val(showDate())">
+        <option disabled selected>Выберите год</option>
+        <option id='idChooseDateOpton'>
+          <script>
+            document.write(showDate());
+          </script>
+        </option>
+      </select>
+    </p>
+
+    <p style='margin-left:5%;margin-top:10%;'>
+      <input type="submit" value="Создать" form='formSelectCreateYear'>
+    </p>
+  </form>
+
+{% endblock %}

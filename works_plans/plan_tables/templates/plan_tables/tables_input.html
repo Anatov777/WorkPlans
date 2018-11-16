@@ -1,0 +1,48 @@
+{% extends 'plan_tables/homePage.html' %}
+
+{% block tables_input %}
+
+  {% if checkApproval %}
+    {% for approvalVal in checkApproval %}
+      {% if approvalVal.approval == 0.5 %}
+        <p align='center'><font size="5" color="blue" face="Arial">Отправлен на утверждение</font></p>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% include "plan_tables/includes/academicWorkFall.html" %}
+  {% include "plan_tables/includes/hourlyWorkFall.html" %}
+  {% include "plan_tables/includes/academicWorkSpring.html" %}
+  {% include "plan_tables/includes/hourlyWorkSpring.html" %}
+  {% include "plan_tables/includes/educMethodWork.html" %}
+  {% include "plan_tables/includes/sciWork.html" %}
+  {% include "plan_tables/includes/literature.html" %}
+  {% include "plan_tables/includes/otherWork.html" %}
+  {% include "plan_tables/includes/training.html" %}
+  {% include "plan_tables/includes/finalTable.html" %}
+
+
+  {% if selectTeacher %}
+
+    <p align='center'><input type="submit" value="Утвердить" id='approvalButton'><input type="number" value="0" name='approvalValue' hidden></p>
+
+  {% else %}
+
+    <p align='center'>
+      <input type="submit" form='formSendApproval' value="Отправить на утверждение" id='approvalSendButton' onclick="$('.approvalSendValue').val(1)">
+      <input type="number" form='formSendApproval' value="0" class='approvalSendValue' name='approvalSendValue' hidden>
+    </p>
+
+  {% endif %}
+
+<!-- Блокировка кнопок -->
+
+  {% if checkApproval %}
+    {% for approvalVal in checkApproval %}
+      {% if approvalVal.approval == 0.5 %}
+        <script> disSaveBtn(); </script>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,176 @@
+{% block content %}
+
+<strong><div class='parHead'>Итоговая таблица нагрузки</div></strong>
+
+<form action='' method='post' id='form_finalTable'>
+  {% csrf_token %}
+</form>
+
+<center><div class='finalTable'><table border='1' id='tableId_final'>
+  <tr>
+    <th>
+      №
+    </th>
+    <th>
+      Вид работы
+    </th>
+    <th>
+      План <br>(часы)
+    </th>
+    <th>
+      План <br>( % )
+    </th>
+    <th>
+      Факт. <br>(часы)
+    </th>
+    <th>
+      Факт. <br>( % )
+    </th>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      Учебная нагрузка
+    </td>
+    <td>
+      <input type='number' id='final_AcademicPlan' class='academNumInput' form='form_finalTable' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_AcademicPlan_percent' name='final_AcademicPercent' class='academNumInput' form='form_finalTable' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_AcademicFact' class='academNumInput' form='form_finalTable' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_AcademicFact_percent' name='final_AcademicFactPercent' class='academNumInput' form='form_finalTable' readonly>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2
+    </td>
+    <td>
+      Учебнo-методическая нагрузка
+    </td>
+    <td>
+      <input type='number' id='final_method' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_methodPlan_percent' name='final_methodPercent' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_methodFact' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_methodFact_percent' name='final_methodFactPercent' form='form_finalTable' class='academNumInput' readonly>
+  </tr>
+  <tr>
+    <td>
+      3
+    </td>
+    <td>
+      Научная работа
+    </td>
+    <td>
+      <input type='number' id='final_sci' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_sciPlan_percent' name='final_sciPercent' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_sciFact' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_sciFact_percent' name='final_sciFactPercent' form='form_finalTable' class='academNumInput' readonly>
+  </tr>
+  <tr>
+    <td>
+      4
+    </td>
+    <td>
+      Другие виды работ
+    </td>
+    <td>
+      <input type='number' id='final_other' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_otherPlan_percent' name='final_otherPercent' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_otherFact' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_otherFact_percent' name='final_otherFactPercent' form='form_finalTable' class='academNumInput' readonly>
+  </tr>
+  <tr>
+    <td>
+      5
+    </td>
+    <td>
+      Повышение квалификации
+    </td>
+    <td>
+      <input type='number' id='final_qual' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_qualPlan_percent' name='final_qualPercent' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_qualFact' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_qualFact_percent' name='final_qualFactPercent' form='form_finalTable' class='academNumInput' readonly>
+  </tr>
+  <tr>
+    <td colspan='2'>
+      Сумма
+    </td>
+    <td>
+      <input type='number' id='final_sum' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_sumPlan_percent' name='final_sumPercent' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_sumFact' form='form_finalTable' class='academNumInput' readonly>
+    </td>
+    <td>
+      <input type='number' id='final_sumFact_percent' name='final_sumFactPercent' form='form_finalTable' class='academNumInput' readonly>
+  </tr>
+</table></div>
+
+<div id="piechart" style="width: 800px; height: 400px; margin-top:50px"></div></center>
+
+<script>
+  function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['Учебная нагрузка',     +$('#final_AcademicPlan_percent').val()],
+      ['Учебнo-методическая нагрузка',      +$('#final_methodPlan_percent').val()],
+      ['Научная работа',  +$('#final_sciPlan_percent').val()],
+      ['Другие виды работ', +$('#final_otherPlan_percent').val()],
+      ['Повышение квалификации',    +$('#final_qualPlan_percent').val()]
+    ]);
+
+    var teacherPost = '{% for i in teacher %}{{ i.post }}{% endfor %}';
+    if (teacherPost == 'администратор') {
+      diagramTitle = '{% for i in selectTeacher %} {{ i.post }} {{ i.surname }} {{ i.name }} {% endfor %}';
+    }
+    else {
+      diagramTitle = '{% for i in teacher %} {{ i.post }} {{ i.surname }} {{ i.name }} {% endfor %}';
+    }
+
+    var options = {
+      title: "План работы № 1 на 2017/2018 год\n"+diagramTitle+"\n\n Диаграмма нагрузки"
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+{% endblock %}
