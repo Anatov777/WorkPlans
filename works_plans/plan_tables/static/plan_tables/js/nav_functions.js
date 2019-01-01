@@ -14,15 +14,21 @@ function toPlanId(id) {
 
 function toYear(id) {
   url = location.href;
-  if (url.split('/')[5]){
-    url = url.split('/')[0] + '/' + url.split('/')[1] + '/' + url.split('/')[2] + '/' + url.split('/')[3] + '/' + url.split('/')[4];
-    url += "/" + getSelectValue(id).replace('/','_');
-    url += "?chooseTeacher=" + document.getElementById('chooseTeacherId').getAttribute('value');
-  }
-  else{
+  if (url.length > 65) {
     url = url.split('?')[0];
-    url += "/" + getSelectValue(id).replace('/','_');
-    url += "?chooseTeacher=" + document.getElementById('chooseTeacherId').getAttribute('value');
+    if (url.length > 55) {
+      url = url.slice(0, -10);
+      url += "/" + getSelectValue(id).replace('/','_') + "?chooseTeacher=" + document.getElementById('chooseTeacherId').getAttribute('value');
+    }
+    else url += "/" + getSelectValue(id).replace('/','_') + "?chooseTeacher=" + document.getElementById('chooseTeacherId').getAttribute('value');
+  }
+  else if (url.length > 52) {
+    url = url.slice(-16, -10);
+    url = "/plan_tables/"+url+"/"+getSelectValue(id).replace('/','_');
+  }
+  else {
+    url = url.slice(-6);
+    url = "/plan_tables/"+url+"/"+getSelectValue(id).replace('/','_');
   }
   return url;
 }

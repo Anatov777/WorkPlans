@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class PlanTablesConfig(AppConfig):
+class PlansTablesPostgreesConfig(AppConfig):
     name = 'plan_tables'
