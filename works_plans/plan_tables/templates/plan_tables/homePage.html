@@ -13,7 +13,7 @@
           {% endfor %}
         </p>
       </div>
-      <hr>
+      <div class="noprint"><hr></div>
 
       <form action="" method="post" id='teacherChooseForm'>{% csrf_token %}</form>
 
@@ -36,10 +36,10 @@
     {% if selectTeacher or i.post != 'администратор' %}
 
       {% if i.post != 'администратор' %}
-        <input type='text' id='chooseTeacherId' value='' hidden>
+        <input type='text' id='chooseTeacherId' value='{{ i.surname }} {{ i.name }}, {{ i.post }}' hidden>
       {% endif %}
 
-      <div class='text_font'>
+      <div class='text_font noprint'>
         <p>
           Индивидуальный учебный план работы №
 
@@ -81,26 +81,28 @@
             {% for i in teacher %}
               {{ i.post }} {{ i.surname }} {{ i.name }}
             {% endfor %}
+          {% else %}
+            {% for i in selectTeacher %}
+              {{ i.post }} {{ i.surname }} {{ i.name }}
+            {% endfor %}
           {% endif %}
-
-          {% for i in selectTeacher %}
-            {{ i.post }} {{ i.surname }} {{ i.name }}
-          {% endfor %}
         </p>
       </div>
 
-      <div class='text_font divCreateBtn'>
+      <div class='text_font divCreateBtn noprint'>
         <form>{% csrf_token %}
           <input type='button' value='Создать план' onClick='location.href="/plan_tables/create_plan/"'>
         </form>
       </div>
-      <hr>
+      <hr class='noprint'>
 
+<div class="noprint">
       <p>
         <a href="" onClick="event.preventDefault();location.href=toPrint();">Печать</a>
-        <a href="/plan_tables/" class='fillLink'>Заполнение</a>
+        <!-- <a href="/plan_tables/" class='fillLink'>Заполнение</a> -->
+        <a href="" onClick="event.preventDefault();location.href=toFill();" class='fillLink'>Заполнение</a>
       </p>
-
+</div>
       {% block print_tables %}{% endblock %}
 
       {% if argSelectedYear %}

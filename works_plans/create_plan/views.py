@@ -13,6 +13,9 @@ def create_plan(request):
         selectDate = request.POST.get('selectYearCreate')[0:4]
         teacherIden = teacher.objects.get(usern=auth.get_user(request).username)
         maxPlanID = indPlan.objects.all().aggregate(Max('planID'))
+        if maxPlanID['planID__max'] == None:
+            maxPlanID['planID__max'] = 0
+        print(maxPlanID['planID__max'])
 
         for i in range(4):
             indPlanObject = indPlan(
