@@ -22,7 +22,7 @@
           <input type='text' name='chooseTeacher' id='chooseTeacherId' form='teacherChooseForm' list='listTeacher' value='{{ choosedTeacher }}' class='inputSelTeach'>
           <datalist id='listTeacher' form='teacherChooseForm'>
             {% for i in allTeachers %}
-              <option>{{ i.surname }} {{ i.name }}, {{ i.post }}</option>
+              <option>{{ i.surname }} {{ i.name }}, {{ i.post }}, {{ i.teacherID }}</option>
             {% endfor %}
           </datalist>
         </p>
@@ -36,7 +36,7 @@
     {% if selectTeacher or i.post != 'администратор' %}
 
       {% if i.post != 'администратор' %}
-        <input type='text' id='chooseTeacherId' value='{{ i.surname }} {{ i.name }}, {{ i.post }}' hidden>
+        <input type='text' id='chooseTeacherId' value='{{ i.surname }} {{ i.name }}, {{ i.post }}, {{ i.teacherID }}' hidden>
       {% endif %}
 
       <div class='text_font noprint'>
